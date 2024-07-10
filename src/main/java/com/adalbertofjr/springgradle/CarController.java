@@ -2,7 +2,11 @@ package com.adalbertofjr.springgradle;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/cars")
@@ -15,8 +19,21 @@ public class CarController {
         this.carRepository = carRepository;
     }
 
+    @GetMapping
+    @ResponseBody
+    public List<Car> findAll(){
+        return this.carRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    @ResponseBody
+    public Optional<Car> findById(@PathVariable("id") Long id){
+        return this.carRepository.findById(id);
+    }
+
     @PostMapping
     @ResponseBody
+    @ResponseStatus(code = HttpStatus.CREATED)
     public Car create(@RequestBody Car car){
         return this.carRepository.save(car);
     }
