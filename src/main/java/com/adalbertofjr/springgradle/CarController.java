@@ -37,4 +37,10 @@ public class CarController {
     public Car create(@RequestBody Car car){
         return this.carRepository.save(car);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void removeById(@PathVariable("id") Long id){
+        this.carRepository.deleteById(id);
+    }
 }
